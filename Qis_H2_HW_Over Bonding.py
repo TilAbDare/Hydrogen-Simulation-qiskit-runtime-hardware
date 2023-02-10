@@ -1,4 +1,3 @@
-# https://qiskit.org/documentation/nature/tutorials/03_ground_state_solvers.html
 # --------------------------------------------------------------------
 # ******************  Importing libraries ****************************
 # --------------------------------------------------------------------
@@ -24,27 +23,11 @@ np.set_printoptions(precision=4, suppress=True)
 # **************************  IBMQ Access ****************************
 # --------------------------------------------------------------------
 
-#IBMQ.save_account('ba9ad96cbaecbb73dc94d234b5ced5a2422de52d088705cac4676f2e606c99b4179af4583758f611f6392fe21d9e179d8180a2013b605016556013b2dbf50797')
-#IBMQ.load_account()
-#IBMQ.providers()
-#provider = IBMQ.get_provider(hub="ibm-q")  # replace by your runtime provider
-#backend = provider.get_backend("ibmq_qasm_simulator")  # select a backend that supports the runtime
-
-api_key = None
-for attempt in range(3):                                                # <- (1)
-    try:                                                                # <- (3)
-        if api_key:
-            IBMQ.save_account("ba9ad96cbaecbb73dc94d234b5ced5a2422de52d088705cac4676f2e606c99b4179af4583758f611f6392fe21d9e179d8180a2013b605016556013b2dbf50797", overwrite=True)
-        else:
-            IBMQ.load_account()
-        break                                                           # <- (4)
-    except Exception:
-        api_key = input("Enter IBMQ API Key (attempt %s): " % attempt)  # <- (2)
-
-
-#IBMQ.providers()
-#provider = IBMQ.get_provider(hub="ibm-q")  # replace by your runtime provider
-#backend = provider.get_backend("ibmq_qasm_simulator")  # select a backend that supports the runtime
+IBMQ.save_account('ba9ad96cbaecbb73dc94d234b5ced5a2422de52d088705cac4676f2e606c99b4179af4583758f611f6392fe21d9e179d8180a2013b605016556013b2dbf50797')
+IBMQ.load_account()
+IBMQ.providers()
+provider = IBMQ.get_provider(hub="ibm-q")  # replace by your runtime provider
+backend = provider.get_backend("ibmq_qasm_simulator")  # select a backend that supports the runtime
 
 
 # --------------------------------------------------------------------
@@ -94,7 +77,7 @@ print('Run Time: ', runtime, 'sec', ' or ', runtime/60, 'min','\n')
 # --------------------------------------------------------------------
 df = pd.DataFrame(list(zip(h2_length,  hw_energy_list)),
                   columns = ['distance', 'IBM Hardware'])
-#df.to_excel("Diag.xlsx")
+df.to_excel("Diag.xlsx")
 print('-'*8, ' Final Results ', '-'*8)
 print(df)
 
@@ -105,22 +88,9 @@ print(df)
 plt.plot(h2_length, hw_energy_list, 'o', color='red', markerfacecolor=(1, 1, 0, 0.5), label='IBM Hardware', markersize = 7)
 plt.title("Potential Energy Curve of hydrogen Molecule")
 plt.xlabel("H-H band length")
-plt.ylabel("Energy Hartree")
+plt.ylabel("Energy (Hartree)")
 plt.legend()
 #plt.show()
-
-
-# --------------------------------------------------------------------
-# ********************* Saving The Data locally **********************
-# --------------------------------------------------------------------
-
-df = pd.DataFrame(list(zip(h2_length, hw_energy_list)),
-                  columns = ['h2_length', 'hw_energy_list'])
-df.to_excel("Qis_H2_Hardware.xlsx")
-print(df)
-
-
-
 
 
 
